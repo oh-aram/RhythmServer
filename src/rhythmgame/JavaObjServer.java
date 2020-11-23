@@ -200,6 +200,14 @@ public class JavaObjServer extends JFrame {
 			WriteOne(UserName + "님 환영합니다.\n"); // 연결된 사용자에게 정상접속을 알림
 			String msg = "[" + UserName + "]님이 입장 하였습니다.\n";
 			WriteOthers(msg); // 아직 user_vc에 새로 입장한 user는 포함되지 않았다.
+			
+			ChatMsg cm = new ChatMsg("SERVER","301");
+			cm.setRoom1(room[0]);
+			cm.setRoom2(room[1]);
+			cm.setRoom3(room[2]);
+			
+			WriteOneObject(cm);
+			
 		}
 
 		public void Logout() {
@@ -303,6 +311,7 @@ public class JavaObjServer extends JFrame {
 		}
 		public void WriteOneObject(Object ob) {
 			try {
+				AppendText("301");
 			    oos.writeObject(ob);
 			} 
 			catch (IOException e) {
