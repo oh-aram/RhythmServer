@@ -422,9 +422,9 @@ public class JavaObjServer extends JFrame {
 						Logout();
 						break;
 					} else if (cm.getCode().matches("300")) { // 300 ¹æ¹øÈ£
-						if(room[cm.getNum()] < 2) {
+						if(room[cm.getNum()-1] < 2) {
 							cm.setNum(1);
-							room[cm.getNum()] ++;
+							room[cm.getNum()-1] ++;
 						}
 						else {
 							cm.setNum(-1);
