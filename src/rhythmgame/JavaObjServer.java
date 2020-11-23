@@ -205,7 +205,7 @@ public class JavaObjServer extends JFrame {
 			cm.setRoom1(room[0]);
 			cm.setRoom2(room[1]);
 			cm.setRoom3(room[2]);
-			
+			AppendText(cm.getCode());
 			WriteOneObject(cm);
 			
 		}
@@ -311,7 +311,6 @@ public class JavaObjServer extends JFrame {
 		}
 		public void WriteOneObject(Object ob) {
 			try {
-				AppendText("301");
 			    oos.writeObject(ob);
 			} 
 			catch (IOException e) {
