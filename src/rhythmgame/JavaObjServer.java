@@ -45,6 +45,7 @@ public class JavaObjServer extends JFrame {
 
 	private int[] room = new int[3]; // 방 별 인원 수 저장할 배열
 	private int nowSelected =0;
+	private int roomStatus = 0;
 
 	/**
 	 * Launch the application.
@@ -443,10 +444,14 @@ public class JavaObjServer extends JFrame {
 					}
 					else if (cm.getCode().matches("600")) {
 						nowSelected = cm.getnowSelected();
-						WriteOthersObject(cm);
+						WriteAllObject(cm);
 					}
 					else if (cm.getCode().matches("900")) {
 						room[cm.getNum()-1] --;
+					}
+					else if (cm.getCode().matches("1000")) {
+						roomStatus = cm.getroomStatus();
+						WriteAllObject(cm);
 					}
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");

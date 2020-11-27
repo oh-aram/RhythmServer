@@ -17,6 +17,7 @@ class ChatMsg implements Serializable {
 	private int room3;
 	
 	private int nowSelected;
+	private int roomStatus;
 	
 	
 	//커밋을 위한 주석
@@ -96,5 +97,13 @@ class ChatMsg implements Serializable {
 
 	public void setImg(ImageIcon img) {
 		this.img = img;
+	}
+	
+	public void setroomStatus(int roomStatus) {
+		this.roomStatus = roomStatus;
+	}
+	
+	public int getroomStatus() {
+		return roomStatus;
 	}
 }
