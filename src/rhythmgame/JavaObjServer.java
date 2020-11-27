@@ -448,6 +448,7 @@ public class JavaObjServer extends JFrame {
 						WriteAllObject(cm);
 						
 					}
+					
 					else if (cm.getCode().matches("900")) {
 						room[cm.getNum()-1] --;
 					}
