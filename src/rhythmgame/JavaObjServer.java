@@ -436,7 +436,7 @@ public class JavaObjServer extends JFrame {
 						if(room[cm.getNum()-1] < 2) {
 							cm.setNum(1);
 							room[cm.getNum()-1] ++;
-							cm.setnowSelected(nowSelected);
+							cm.setNowSelected(nowSelected);
 						}
 						else {
 							cm.setNum(-1);
@@ -444,7 +444,7 @@ public class JavaObjServer extends JFrame {
 						WriteOneObject(cm);
 					}
 					else if (cm.getCode().matches("600")) {
-						nowSelected = cm.getnowSelected();
+						nowSelected = cm.getNowSelected();
 						WriteAllObject(cm);
 					}
 					else if (cm.getCode().matches("900")) {
