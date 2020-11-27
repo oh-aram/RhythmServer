@@ -454,6 +454,9 @@ public class JavaObjServer extends JFrame {
 						roomStatus = cm.getroomStatus();
 						WriteAllObject(cm);
 					}
+					else if (cm.getCode().matches("800")) {
+						WriteOthersObject(cm);
+					}
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");
 					try {
