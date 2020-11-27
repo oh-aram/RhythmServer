@@ -432,10 +432,11 @@ public class JavaObjServer extends JFrame {
 					} else if (cm.getCode().matches("400")) { // logout message 처리
 						Logout();
 						break;
-					} else if (cm.getCode().matches("300")) { // 300 방번호
+					} else if (cm.getCode().matches("300")) { // 300 방번호 트랙번호
 						if(room[cm.getNum()-1] < 2) {
 							cm.setNum(1);
 							room[cm.getNum()-1] ++;
+							cm.setnowSelected(nowSelected);
 						}
 						else {
 							cm.setNum(-1);
