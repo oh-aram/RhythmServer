@@ -16,6 +16,9 @@ class ChatMsg implements Serializable {
 	private int room2;
 	private int room3;
 	
+	private int nowSelected;
+	
+	
 	//커밋을 위한 주석
 	public ChatMsg(String id, String code) {
 		this.id = id;
@@ -26,6 +29,13 @@ class ChatMsg implements Serializable {
 		this.id = id;
 		this.code = code;
 		this.data = msg;
+	}
+	
+	public int getnowSelected() {
+		return nowSelected;
+	}
+	public void setnowSelected(int nowSelected) {
+		this.nowSelected= nowSelected;
 	}
 	
 	public int getRoom1() {
