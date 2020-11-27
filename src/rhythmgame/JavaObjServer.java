@@ -28,8 +28,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
 public class JavaObjServer extends JFrame {
-	
-	//커밋을 위한 주석
+
+	// 커밋을 위한 주석
 	/**
 	 * 
 	 */
@@ -42,8 +42,9 @@ public class JavaObjServer extends JFrame {
 	private Socket client_socket; // accept() 에서 생성된 client 소켓
 	private Vector UserVec = new Vector(); // 연결된 사용자를 저장할 벡터
 	private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
-	
+
 	private int[] room = new int[3]; // 방 별 인원 수 저장할 배열
+	private int nowSelected =0;
 
 	/**
 	 * Launch the application.
@@ -200,14 +201,14 @@ public class JavaObjServer extends JFrame {
 			WriteOne(UserName + "님 환영합니다.\n"); // 연결된 사용자에게 정상접속을 알림
 			String msg = "[" + UserName + "]님이 입장 하였습니다.\n";
 			WriteOthers(msg); // 아직 user_vc에 새로 입장한 user는 포함되지 않았다.
-			
-			ChatMsg cm = new ChatMsg("SERVER","301");
+
+			ChatMsg cm = new ChatMsg("SERVER", "301");
 			cm.setRoom1(room[0]);
 			cm.setRoom2(room[1]);
 			cm.setRoom3(room[2]);
-			
+			AppendText(cm.getCode());
 			WriteOneObject(cm);
-			
+
 		}
 
 		public void Logout() {
@@ -225,11 +226,21 @@ public class JavaObjServer extends JFrame {
 					user.WriteOne(str);
 			}
 		}
+
 		// 모든 User들에게 Object를 방송. 채팅 message와 image object를 보낼 수 있다
 		public void WriteAllObject(Object ob) {
 			for (int i = 0; i < user_vc.size(); i++) {
 				UserService user = (UserService) user_vc.elementAt(i);
 				if (user.UserStatus == "O")
+					user.WriteOneObject(ob);
+			}
+		}
+
+		// 나를 제외한 User들에게 Object를 방송. 채팅 message와 image object를 보낼 수 있다
+		public void WriteOthersObject(Object ob) {
+			for (int i = 0; i < user_vc.size(); i++) {
+				UserService user = (UserService) user_vc.elementAt(i);
+				if (user != this && user.UserStatus == "O")
 					user.WriteOneObject(ob);
 			}
 		}
@@ -309,20 +320,19 @@ public class JavaObjServer extends JFrame {
 				Logout(); // 에러가난 현재 객체를 벡터에서 지운다
 			}
 		}
+
 		public void WriteOneObject(Object ob) {
 			try {
-				AppendText("301");
-			    oos.writeObject(ob);
-			} 
-			catch (IOException e) {
-				AppendText("oos.writeObject(ob) error");		
+				oos.writeObject(ob);
+			} catch (IOException e) {
+				AppendText("oos.writeObject(ob) error");
 				try {
 					ois.close();
 					oos.close();
 					client_socket.close();
 					client_socket = null;
 					ois = null;
-					oos = null;				
+					oos = null;
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -330,7 +340,7 @@ public class JavaObjServer extends JFrame {
 				Logout();
 			}
 		}
-		
+
 		public void run() {
 			while (true) { // 사용자 접속을 계속해서 받기 위해 while문
 				try {
@@ -430,6 +440,13 @@ public class JavaObjServer extends JFrame {
 							cm.setNum(-1);
 						}
 						WriteOneObject(cm);
+					}
+					else if (cm.getCode().matches("600")) {
+						nowSelected = cm.getnowSelected();
+						WriteOthersObject(cm);
+					}
+					else if (cm.getCode().matches("900")) {
+						room[cm.getNum()-1] --;
 					}
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");
