@@ -443,7 +443,7 @@ public class JavaObjServer extends JFrame {
 						}
 						WriteOneObject(cm);
 					}
-					else if (cm.getCode().matches("600")) {
+					else if (cm.getCode().matches("600")) { //600 노래제목
 						nowSelected = cm.getNowSelected();
 						WriteAllObject(cm);
 						
@@ -452,11 +452,11 @@ public class JavaObjServer extends JFrame {
 					else if (cm.getCode().matches("900")) {
 						room[cm.getNum()-1] --;
 					}
-					else if (cm.getCode().matches("1000")) {
+					else if (cm.getCode().matches("1000")) { //1000 게임상태
 						roomStatus = cm.getroomStatus();
 						WriteAllObject(cm);
 					}
-					else if (cm.getCode().matches("800")) {
+					else if (cm.getCode().matches("700")) { //700 판정 점수
 						WriteOthersObject(cm);
 					}
 				} catch (IOException e) {
