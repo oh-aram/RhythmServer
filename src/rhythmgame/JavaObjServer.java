@@ -446,7 +446,7 @@ public class JavaObjServer extends JFrame {
 					}
 					else if (cm.getCode().matches("500")) { 
 						appleAttack = cm.getAppleAttack();
-						WriteAllObject(cm);
+						WriteOthersObject(cm);
 					}
 					else if (cm.getCode().matches("600")) { //600 노래제목
 						nowSelected = cm.getNowSelected();

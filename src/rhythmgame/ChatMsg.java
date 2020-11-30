@@ -145,4 +145,8 @@ class ChatMsg implements Serializable {
 	public int getAppleAttack() {
 		return appleAttack;
 	}
+	
+	public void setAppleAttack() {
+		this.appleAttack = appleAttack;
+	}
 }
