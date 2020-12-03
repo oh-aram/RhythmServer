@@ -37,6 +37,7 @@ public class JavaObjServer extends JFrame {
 	private JPanel contentPane;
 	JTextArea textArea;
 	private JTextField txtPortNumber;
+	private int beeAttack;
 
 	private ServerSocket socket; // 辑滚家南
 	private Socket client_socket; // accept() 俊辑 积己等 client 家南
@@ -446,6 +447,11 @@ public class JavaObjServer extends JFrame {
 					}
 					else if (cm.getCode().matches("500")) { 
 						appleAttack = cm.getAppleAttack();
+						WriteOthersObject(cm);
+					}
+					
+					else if (cm.getCode().matches("501")) { 
+						beeAttack = cm.getBeeAttack();
 						WriteOthersObject(cm);
 					}
 					else if (cm.getCode().matches("600")) { //600 畴贰力格
