@@ -210,7 +210,7 @@ public class JavaObjServer extends JFrame {
 			cm.setRoom2(room[1]);
 			cm.setRoom3(room[2]);
 			AppendText(cm.getCode());
-			WriteOneObject(cm);
+			WriteAllObject(cm);
 
 		}
 
@@ -436,8 +436,13 @@ public class JavaObjServer extends JFrame {
 						break;
 					} else if (cm.getCode().matches("300")) { // 300 방번호 트랙번호
 						if(room[cm.getNum()-1] < 2) {
-							cm.setNum(1);
+							
 							room[cm.getNum()-1] ++;
+							cm.setRoom1(room[0]);
+							cm.setRoom2(room[1]);
+							cm.setRoom3(room[2]);
+							
+							cm.setNum(1);
 							cm.setNowSelected(nowSelected);
 						}
 						else {
