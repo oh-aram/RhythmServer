@@ -464,6 +464,9 @@ public class JavaObjServer extends JFrame {
 					else if (cm.getCode().matches("700")) { //700 판정 점수
 						WriteOthersObject(cm);
 					}
+					else if(cm.getCode().matches("800")) {
+						WriteOthersObject(cm);
+					}
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");
 					try {
