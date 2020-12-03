@@ -23,6 +23,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
@@ -48,6 +49,8 @@ public class JavaObjServer extends JFrame {
 	private int nowSelected =0;
 	private int roomStatus = 0;
 	private int appleAttack = 0;
+	
+	private ArrayList<String> userList = new ArrayList<String>();
 
 	/**
 	 * Launch the application.
@@ -435,6 +438,8 @@ public class JavaObjServer extends JFrame {
 						Logout();
 						break;
 					} else if (cm.getCode().matches("300")) { // 300 방번호 트랙번호
+							
+						
 						if(room[cm.getNum()-1] < 2) {
 							
 							room[cm.getNum()-1] ++;
@@ -444,6 +449,20 @@ public class JavaObjServer extends JFrame {
 							
 							cm.setNum(1);
 							cm.setNowSelected(nowSelected);
+							
+							userList.add(cm.getId());
+							cm.setUserList(userList);
+							if(room[cm.getNum()-1] ==2) {
+								for (int i =0; i<userList.size(); i++) {
+									if(!userList.get(i).equals(cm.getId())) {
+										ChatMsg cm2 = new ChatMsg("SERVER", "302");
+										cm2.setOtherUser(cm.getId());
+										WriteOthersObject(cm2);
+									}
+										
+								}
+								
+							}
 						}
 						else {
 							cm.setNum(-1);
