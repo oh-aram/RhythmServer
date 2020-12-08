@@ -530,8 +530,11 @@ public class JavaObjServer extends JFrame {
 						userList.remove(rmNum);
 					}
 					else if (cm.getCode().matches("1000")) { //1000 게임상태
-						roomStatus = cm.getroomStatus();
-						WriteAllObject(cm);
+						if (roomStatus != cm.getroomStatus()) { 
+							roomStatus = cm.getroomStatus();
+							WriteAllObject(cm);
+						}
+							
 					}
 					else if (cm.getCode().matches("700")) { //700 판정 점수
 						WriteOthersObject(cm);
