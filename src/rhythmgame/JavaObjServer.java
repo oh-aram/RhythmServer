@@ -220,7 +220,7 @@ public class JavaObjServer extends JFrame {
 		public void Logout() {
 			String msg = "[" + UserName + "]님이 퇴장 하였습니다.\n";
 			UserVec.removeElement(this); // Logout한 현재 객체를 벡터에서 지운다
-			WriteAll(msg); // 나를 제외한 다른 User들에게 전송
+			//WriteAll(msg); // 나를 제외한 다른 User들에게 전송
 			AppendText("사용자 " + "[" + UserName + "] 퇴장. 현재 참가자 수 " + UserVec.size());
 		}
 
@@ -434,10 +434,8 @@ public class JavaObjServer extends JFrame {
 							//WriteAll(msg + "\n"); // Write All
 							WriteAllObject(cm);
 						}
-					} else if (cm.getCode().matches("400")) { // logout message 처리
-						Logout();
-						break;
-					} else if (cm.getCode().matches("300")) { // 300 방번호 트랙번호
+					} 
+					else if (cm.getCode().matches("300")) { // 300 방번호 트랙번호
 							
 						
 						if(room[cm.getNum()-1] < 2) {
@@ -469,6 +467,32 @@ public class JavaObjServer extends JFrame {
 						}
 						WriteOneObject(cm);
 					}
+					else if(cm.getCode().matches("400")) {
+						int userCount = userList.size();
+						String thisUser = cm.getId();
+						int rmNum = 0;
+						
+						for (int i = 0; i<userCount; i++) {
+							if(!userList.get(i).equals(thisUser)) {
+								
+								ChatMsg cm2 = new ChatMsg("SERVER", "302");
+								cm2.setOtherUser("/empty");
+								WriteOthersObject(cm2);
+								
+							}
+							else {
+								rmNum = i;
+								
+								
+							}
+						}
+						if (userCount > 0) {
+							userList.remove(rmNum);
+						}
+						Logout();
+						
+						break;
+					}
 					else if (cm.getCode().matches("500")) { 
 						appleAttack = cm.getAppleAttack();
 						WriteOthersObject(cm);
@@ -485,7 +509,25 @@ public class JavaObjServer extends JFrame {
 					}
 					
 					else if (cm.getCode().matches("900")) {
-						room[cm.getNum()-1] --;
+						int userCount = userList.size();
+						String thisUser = cm.getId();
+						int rmNum = 0;
+						
+						for (int i = 0; i<userCount; i++) {
+							if(!userList.get(i).equals(thisUser)) {
+								
+								ChatMsg cm2 = new ChatMsg("SERVER", "302");
+								cm2.setOtherUser("/empty");
+								WriteOthersObject(cm2);
+								
+							}
+							else {
+								rmNum = i;
+								
+								
+							}
+						}
+						userList.remove(rmNum);
 					}
 					else if (cm.getCode().matches("1000")) { //1000 게임상태
 						roomStatus = cm.getroomStatus();
