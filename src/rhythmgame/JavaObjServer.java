@@ -47,7 +47,7 @@ public class JavaObjServer extends JFrame {
 
 	private int[] room = new int[3]; // 방 별 인원 수 저장할 배열
 	private int nowSelected =0;
-	private int roomStatus = 0;
+	private int roomStatus = 2; //1:게임시작 2:게임x
 	private int appleAttack = 0;
 	
 	private ArrayList<String> userList = new ArrayList<String>();
@@ -435,7 +435,7 @@ public class JavaObjServer extends JFrame {
 							WriteAllObject(cm);
 						}
 					} 
-					else if (cm.getCode().matches("300")) { // 300 방번호 트랙번호
+					else if (cm.getCode().matches("300")) { // 300 방번호 현재트랙번호
 							
 						
 						if(room[cm.getNum()-1] < 2) {
@@ -478,6 +478,12 @@ public class JavaObjServer extends JFrame {
 								ChatMsg cm2 = new ChatMsg("SERVER", "302");
 								cm2.setOtherUser("/empty");
 								WriteOthersObject(cm2);
+								if (roomStatus!=2) {
+									ChatMsg cm3 = new ChatMsg("SERVER", "1000");
+									cm3.setroomStatus(2);
+									WriteOthersObject(cm3);
+									roomStatus =2;
+								}
 								
 							}
 							else {
